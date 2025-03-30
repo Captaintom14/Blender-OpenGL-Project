@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <iostream>
+#include <sstream>
 #include <fstream>
 
 using namespace std;
@@ -29,6 +30,7 @@ void shaders::createShader(const char* vertexPath, const char* fragmentPath)
 
     int successVertex; 
     char infoLogVertex[512];
+    
     // Compile vertex shader
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &successVertex);
     if (!successVertex) {
