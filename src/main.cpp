@@ -9,8 +9,12 @@
 using namespace std;
 
 
+float xPosition = 0;
+float yPosition = 0;
+float scale = 1.0f;
+float angle = 0.0f;
 
-
+void movementModel(GLFWwindow* window);
 
 void processInput(GLFWwindow* window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS){
@@ -86,10 +90,14 @@ int main() {
     glViewport(0, 0, widthWindow, heightWindow);
 
 
+    // Initialize the Shaders 
+
+    shaders shader;
+    shader.createShader("/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/vertexShader.vs", "/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/fragmentShader.frag");
 
 
 
-    
+
 
     // Main loop 
     while (!glfwWindowShouldClose(window)) {
