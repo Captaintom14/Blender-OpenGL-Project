@@ -67,7 +67,7 @@ void Model::loadModel(const char* path){
 
         // Check the texture coordinates of the object
         if (prefix == "vt"){
-            iss >> tex.u >> tex.v;\
+            iss >> tex.u >> tex.v;
             //debug
             cout << "Texture coordinates: " << tex.u << " " << tex.v << endl;
             texCoord.push_back(tex);
@@ -91,16 +91,54 @@ void Model::loadModel(const char* path){
             }
 
             // Read the indexes of the vertices
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < vertexIndex.size(); i++)
             {
                 f.vertexIndex = vertexIndex[i];
                 f.normalIndex = normalIndex[i];
                 f.texCoordIndex = texCoordIndex[i];
                 face.push_back(f);
+
             }
             
         }
+
     }
 
+    // Close the file
+    file.close();
+    cout << "File closed successfully: " << path << endl;
+    
+
+    for (int i = 0; i < face.size(); i++)
+    {
+        Position p = position[face[i].vertexIndex - 1];
+        TexCoord t = texCoord[face[i].texCoordIndex - 1];
+        Normal n = normal[face[i].normalIndex - 1];
+
+        cout << "Vertex: " << p.x << " " << p.y << " " << p.z << endl;
+        cout << "Texture: " << t.u << " " << t.v << endl;
+        cout << "Normal: " << n.nx << " " << n.ny << " " << n.nz << endl;
+
+        vertices.push_back(p.x);
+        vertices.push_back(p.y);
+        vertices.push_back(p.z);
+
+        vertices.push_back(t.u);
+        vertices.push_back(t.v);
+
+        vertices.push_back(n.nx);
+        vertices.push_back(n.ny);
+        vertices.push_back(n.nz);
+        indices.push_back(i);
+    }
+}
+
+
+ vector <float> Model:: getVertices(){
+  return  vertices;
+}
+
+ vector <unsigned int>  Model:: getIndices(){
+  return indices;
 }
 

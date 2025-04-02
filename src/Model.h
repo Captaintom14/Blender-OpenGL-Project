@@ -16,6 +16,9 @@ public:
     void createBuffers(); // Create buffers for the model
     void drawModel(); // Draw the model
 
+    vector <float> getVertices(); // Get the vertices of the model
+    vector <unsigned int> getIndices(); // Get the indices of the model
+
     typedef struct{
         float x, y, z; // Vertex coordinates
     } Position;
@@ -38,12 +41,11 @@ public:
         unsigned int texCoordIndex; // Index of the texture coordinate
     } Face;
     
-    
-
+    vector <float> vertices; // Vector of vertices
+    vector <unsigned int> indices; // Vector of colors
 
 
 private:
-   unsigned int VAO, VBO, EBO; // Vertex Array Object, Vertex Buffer Object, Element Buffer Object
    vector <Position> position;
    vector <Color> color;
    vector <Normal> normal;

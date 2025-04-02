@@ -116,8 +116,8 @@ int main() {
    const char* fragmentPath = "/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/fragmentShader.frag";
 
     //debug
-cout << " Debug Vertex Shader Path: " << vertexPath << endl;
-cout << " Debug Fragment Shader Path: " << fragmentPath << endl;
+    cout << " Debug Vertex Shader Path: " << vertexPath << endl;
+    cout << " Debug Fragment Shader Path: " << fragmentPath << endl;
 
     shader.createShader(vertexPath,fragmentPath);
 
@@ -130,10 +130,12 @@ cout << " Debug Fragment Shader Path: " << fragmentPath << endl;
     // Load the model from the file (The current file is CUBE.obj and it is for testing purposes once the cybertruck is done, it will be replaced)
     model.loadModel("/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/CUBE.obj");
 
-    // Create buffers for the model
-    model.createBuffers();
     
      cout << "Model loaded successfully" << endl;
+
+ 
+     vector <float> vertices = model.getVertices();
+     vector <unsigned int> indices = model.getIndices();
 
 
 
