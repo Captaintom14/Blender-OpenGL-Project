@@ -3,11 +3,19 @@
 
 #pragma once
 
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
 class Model
 {
 public:
+
     void loadModel(const char* path); // Load a model from a file
-    
+    void createBuffers(); // Create buffers for the model
+    void drawModel(); // Draw the model
+
     typedef struct{
         float x, y, z; // Vertex coordinates
     } Position;
@@ -25,16 +33,23 @@ public:
     } TexCoord;
 
     typedef struct{
-        int vertexIndex; // Index of the vertex
-        int normalIndex; // Index of the normal
-        int texCoordIndex; // Index of the texture coordinate
+        unsigned int vertexIndex; // Index of the vertex
+        unsigned int normalIndex; // Index of the normal
+        unsigned int texCoordIndex; // Index of the texture coordinate
     } Face;
-
-
-
-
     
+    
+
+
+
 private:
+   unsigned int VAO, VBO, EBO; // Vertex Array Object, Vertex Buffer Object, Element Buffer Object
+   vector <Position> position;
+   vector <Color> color;
+   vector <Normal> normal;
+   vector <TexCoord> texCoord;
+   vector <Face> face;
+   unsigned int arraySize; // Size of the array
 
 };
 

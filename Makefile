@@ -2,9 +2,9 @@ CC = g++
 CFLAGS = -std=c++17 -I/opt/homebrew/opt/glew/include -I/opt/homebrew/opt/glfw/include -I/opt/homebrew/include -I/opt/homebrew/opt/freeglut/include -I/opt/homebrew/opt/freetype/include
 LDFLAGS = -L/opt/homebrew/opt/glew/lib -L/opt/homebrew/opt/glfw/lib -L/opt/homebrew/opt/freeglut/lib -L/opt/homebrew/opt/freetype/lib -lGLEW -lglfw -framework OpenGL -DGL_SILENCE_DEPRECATION
 
-SRC = src/main.cpp src/shaders.cpp
+SRC = src/main.cpp src/shaders.cpp src/Model.cpp
 OBJ = $(SRC:.cpp=.o)
-TARGET = OpenGLApp
+TARGET = CyberTruck
 
 all: $(TARGET)
 

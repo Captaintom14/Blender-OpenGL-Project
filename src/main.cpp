@@ -71,11 +71,16 @@ if (glfwGetKey (window, GLFW_KEY_4) == GLFW_PRESS) {
 
 
 int main() {
-    
+     
     if (!glfwInit()) {
         cout << "Failed to initialize GLFW" << endl;
         return -1;
     }
+    cout << "GLFW initialized successfully" << endl; // debug
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL Window", NULL, NULL);
     if (!window) {
@@ -89,17 +94,48 @@ int main() {
     glfwGetWindowSize(window, &widthWindow, &heightWindow);
     glViewport(0, 0, widthWindow, heightWindow);
 
+   
+    
+    cout << "GLFW window created successfully" << endl; // debug
+
+
+    // Initialize GLEW
+    glewExperimental = GL_TRUE; // Allow modern OpenGL functions
+    GLenum err = glewInit();
+    if (err != GLEW_OK) {
+        cout << "Failed to initialize GLEW: " << glewGetErrorString(err) << endl;
+        return -1;
+    }
+    cout << "GLEW initialized successfully" << endl; // debug
+
 
     // Initialize the Shaders 
-
     shaders shader;
-    shader.createShader("/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/vertexShader.vs", "/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/fragmentShader.frag");
+    
+   const char* vertexPath = "/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/vertexShader.vs";
+   const char* fragmentPath = "/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/fragmentShader.frag";
+
+    //debug
+cout << " Debug Vertex Shader Path: " << vertexPath << endl;
+cout << " Debug Fragment Shader Path: " << fragmentPath << endl;
+
+    shader.createShader(vertexPath,fragmentPath);
 
 
     // Initialize the Model
     Model model;
+   const char* modelPath = "/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/CUBE.obj";
+    //debug
+    cout << "Model Path: " << modelPath << endl;
     // Load the model from the file (The current file is CUBE.obj and it is for testing purposes once the cybertruck is done, it will be replaced)
     model.loadModel("/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/CUBE.obj");
+
+    // Create buffers for the model
+    model.createBuffers();
+    
+     cout << "Model loaded successfully" << endl;
+
+
 
 
 
@@ -110,6 +146,9 @@ int main() {
 
         // Process input
         processInput(window);
+        
+        // Use the shader program
+        shader.useShader();
 
         // Swap buffers
         glfwSwapBuffers(window);
