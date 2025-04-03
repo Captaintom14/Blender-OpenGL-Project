@@ -10,10 +10,10 @@
 using namespace std;
 
 
-float xPosition = 0;
-float yPosition = 0;
+float xPosition = 0.5f;
+float yPosition = 0.3f;
 float scale = 1.0f;
-float angle = 0.0f;
+float angle = 30.0f;
 int widthWindow, heightWindow = 0;
 
 
@@ -130,10 +130,10 @@ void BufferData(unsigned int &VAO, unsigned int &VBO, unsigned int &EBO, vector 
 
 void matrices(shaders& shader) {
    
-     glm ::mat4 modelMatrix = glm::mat4(1.0f); // Initialize the model matrix to identity
+    glm ::mat4 modelMatrix = glm::mat4(1.0f); // Initialize the model matrix to identity
 
     modelMatrix = glm::translate(modelMatrix, glm::vec3(xPosition, yPosition, -3.0f)); // Translate the model
-    modelMatrix = glm::rotate(modelMatrix, angle, glm::vec3(1.0f, 1.0f, 1.0f)); // Rotate the model
+    modelMatrix = glm::rotate(modelMatrix, angle, glm::vec3(2.0f, 1.0f, 5.0f)); // Rotate the model
     modelMatrix = glm::scale(modelMatrix, glm::vec3(scale, scale, scale)); // Scale the model
     unsigned int modelLoc = glGetUniformLocation(shader.ID, "model"); // Get the location of the model matrix in the shaderà
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix)); // Send the model matrix to the shader
