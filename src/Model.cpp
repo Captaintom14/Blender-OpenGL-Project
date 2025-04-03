@@ -15,7 +15,6 @@ using namespace std;
 
 void Model::loadModel(const char* path){
 
-   
    Position pos;
    Color col;
    Normal norm;
@@ -45,14 +44,14 @@ void Model::loadModel(const char* path){
         if (prefix == "o"){
             iss >> name;
             //debug
-            cout << "Object name: " << name << endl;
+         //   cout << "Object name: " << name << endl;
         }
         
         // Check the position of the object
         if (prefix == "v"){
             iss >> pos.x >> pos.y >> pos.z;
             //debug
-            cout << "Position: " << pos.x << " " << pos.y << " " << pos.z << endl;
+         //  cout << "Position: " << pos.x << " " << pos.y << " " << pos.z << endl;
             position.push_back(pos);
 
         }
@@ -61,7 +60,7 @@ void Model::loadModel(const char* path){
         if (prefix == "vn"){
             iss >> norm.nx >> norm.ny >> norm.nz;
             //debug
-            cout << "Normal: " << norm.nx << " " << norm.ny << " " << norm.nz << endl;
+          //  cout << "Normal: " << norm.nx << " " << norm.ny << " " << norm.nz << endl;
             normal.push_back(norm);
         }
 
@@ -69,22 +68,26 @@ void Model::loadModel(const char* path){
         if (prefix == "vt"){
             iss >> tex.u >> tex.v;
             //debug
-            cout << "Texture coordinates: " << tex.u << " " << tex.v << endl;
+           // cout << "Texture coordinates: " << tex.u << " " << tex.v << endl;
             texCoord.push_back(tex);
         }
 
         if (prefix == "f"){
-             vector < unsigned int> vertexIndex, normalIndex, texCoordIndex;
-             unsigned int vIndex, nIndex, tIndex;
-            char slash;
 
+            //Create vertices for the vertices, normals and texture coordinates
+             vector < unsigned int> vertexIndex, normalIndex, texCoordIndex;
+            // Read the indexes of the vertices
+             unsigned int vIndex, nIndex, tIndex;
+
+            char slash;
 
             // Read the through the indexes of the vertices
             for (int i = 0; i < 4; i++)
             {
                 iss >> vIndex >> slash >> tIndex >> slash >> nIndex;
+
                 //debug
-                cout << vIndex << "/" << tIndex << "/" << nIndex << endl;
+              //  cout << vIndex << slash << tIndex << slash << nIndex << endl;
                 vertexIndex.push_back(vIndex);
                 texCoordIndex.push_back(tIndex);
                 normalIndex.push_back(nIndex);
@@ -97,7 +100,6 @@ void Model::loadModel(const char* path){
                 f.normalIndex = normalIndex[i];
                 f.texCoordIndex = texCoordIndex[i];
                 face.push_back(f);
-
             }
             
         }
@@ -108,16 +110,17 @@ void Model::loadModel(const char* path){
     file.close();
     cout << "File closed successfully: " << path << endl;
     
-
+     //take the vertices, normals and texture coordinates and put them in a vector
     for (int i = 0; i < face.size(); i++)
     {
         Position p = position[face[i].vertexIndex - 1];
         TexCoord t = texCoord[face[i].texCoordIndex - 1];
         Normal n = normal[face[i].normalIndex - 1];
 
-        cout << "Vertex: " << p.x << " " << p.y << " " << p.z << endl;
-        cout << "Texture: " << t.u << " " << t.v << endl;
-        cout << "Normal: " << n.nx << " " << n.ny << " " << n.nz << endl;
+        //debug
+     //   cout << "Vertex: " << p.x << " " << p.y << " " << p.z << endl;
+     //   cout << "Texture: " << t.u << " " << t.v << endl;
+    //    cout << "Normal: " << n.nx << " " << n.ny << " " << n.nz << endl;
 
         vertices.push_back(p.x);
         vertices.push_back(p.y);
@@ -129,7 +132,22 @@ void Model::loadModel(const char* path){
         vertices.push_back(n.nx);
         vertices.push_back(n.ny);
         vertices.push_back(n.nz);
+    }
+
+    // Create the indices for the vertices
+    for (int i = 0; i < face.size(); i += 4)
+    { 
+        //converting the quadrilateral to two triangles
+
+        // The first triangle is created by taking the first three vertices of the face vector
+        indices.push_back(i); // 
+        indices.push_back(i + 1);
+        indices.push_back(i + 2);
+
+        // The second triangle is created by taking the last three vertices of the face vector
         indices.push_back(i);
+        indices.push_back(i + 2);
+        indices.push_back(i + 3);
     }
 }
 
@@ -137,6 +155,7 @@ void Model::loadModel(const char* path){
  vector <float> Model:: getVertices(){
   return  vertices;
 }
+
 
  vector <unsigned int>  Model:: getIndices(){
   return indices;
