@@ -16,7 +16,6 @@ using namespace std;
 void Model::loadModel(const char* path){
 
    Position pos;
-   Color col;
    Normal norm;
    TexCoord tex;
    Face f;

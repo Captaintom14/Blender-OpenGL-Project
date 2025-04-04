@@ -24,10 +24,6 @@ public:
     } Position;
 
     typedef struct{
-        float r, g, b; // Color
-    } Color;
-
-    typedef struct{
         float nx, ny, nz; // Normal vector
     } Normal;
 
@@ -47,7 +43,6 @@ public:
 
 private:
    vector <Position> position;
-   vector <Color> color;
    vector <Normal> normal;
    vector <TexCoord> texCoord;
    vector <Face> face;

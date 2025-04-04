@@ -3,10 +3,14 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <iostream>
+
 
 #include "Model.h"
 #include "shaders.h"
+#include "ModelAssimp.h"
+
+#include <vector>  
+#include <iostream>
 using namespace std;
 
 
@@ -55,7 +59,6 @@ void processInput(GLFWwindow* window) {
     }
     movementModel(window);
 }
-
 
 void movementModel(GLFWwindow* window) {
 
@@ -118,13 +121,19 @@ void BufferData(unsigned int &VAO, unsigned int &VBO, unsigned int &EBO, vector 
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 
 
-    //4. Set the vertex attribute pointers (location = 0)
+    //4. Set the vertex attribute pointers (location = 0) Position 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0); // Vertex position
     glEnableVertexAttribArray(0);
 
-    //5. Set the vertex attribute pointers (location = 1)
+    //5. Set the vertex attribute pointers (location = 1) Texture Coordinates
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float))); // Texture coordinates
     glEnableVertexAttribArray(1);
+
+    //6. Set the vertex attribute pointers (location = 2) Normals
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float))); // Normals
+    glEnableVertexAttribArray(2);
+
+    glBindVertexArray(0);
 
 }
 
@@ -191,20 +200,23 @@ int main() {
 
 
     // Initialize the Model
-    Model model;
    const char* modelPath = "/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/CUBE.obj";
     //debug
     //cout << "Model Path: " << modelPath << endl;
     // Load the model from the file (The current file is CUBE.obj and it is for testing purposes once the cybertruck is done, it will be replaced)
+    Model model;
     model.loadModel("/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/CUBE.obj");
-
     
+    ModelAssimp modelAssimp;
+    modelAssimp.LoadModel(modelPath);
+
+
     cout << "Model loaded successfully" << endl;
 
  
     // Get the vertices and indices of the model
-    vector <float> vertices = model.getVertices();
-    vector <unsigned int> indices = model.getIndices();
+    vector <float> vertices = modelAssimp.getVertices();
+    vector <unsigned int> indices = modelAssimp.getIndices();
 
 
     // Create buffers for the model
