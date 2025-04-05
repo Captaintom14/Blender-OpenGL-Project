@@ -17,7 +17,7 @@ using namespace std;
 float xPosition = 0.5f;
 float yPosition = 0.3f;
 float scale = 1.0f;
-float angle = 30.0f;
+float angle = 0.0f;
 int widthWindow, heightWindow = 0;
 
 
@@ -146,7 +146,7 @@ void matrices(shaders& shader) {
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix)); // Send the model matrix to the shader
 
 
-    glm :: mat4 view = glm :: translate(glm :: mat4(1.0f), glm :: vec3(0.0f, 0.0f, -5.0f)); // Initialize the view matrix to identity
+    glm :: mat4 view = glm :: lookAt(glm :: vec3(0.0f, 0.0f, 3.0f), glm :: vec3(0.0f, 0.0f, 0.0f), glm :: vec3(0.0f, 1.0f, 0.0f)); // Initialize the view matrix to identity
     unsigned int viewLoc = glGetUniformLocation(shader.ID, "view"); // Get the location of the view matrix in the shader
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view)); // Send the view matrix to the shader
 
@@ -198,7 +198,7 @@ int main() {
 
 
     // Initialize the Model
-   const char* modelPath = "/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/CUBE.obj";
+   const char* modelPath = "/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/Cybertruck_A3_COMP371.obj";
     //debug
     //cout << "Model Path: " << modelPath << endl;
     // Load the model from the file (The current file is CUBE.obj and it is for testing purposes once the cybertruck is done, it will be replaced)
@@ -234,7 +234,7 @@ int main() {
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        
+        angle += glm :: radians(0.6f); // Rotate the model
         // Use the shader program
         shader.useShader();
 
