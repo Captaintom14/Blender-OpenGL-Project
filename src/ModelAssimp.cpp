@@ -30,6 +30,7 @@ indices.clear();
 for (unsigned int i = 0; i < meshCount; i++) {
     aiMesh* mesh = scene->mMeshes[i];
 
+    unsigned int vertexOffset = vertices.size() / 8; // 8 floats per vertex (3 for position, 2 for texture, 3 for normal)
         for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
                 aiVector3D vertex = mesh->mVertices[j];
 
@@ -58,7 +59,7 @@ for (unsigned int i = 0; i < meshCount; i++) {
             for (unsigned int j = 0; j < mesh->mNumFaces; j++) {
             aiFace face = mesh->mFaces[j];
             for (unsigned int k = 0; k < face.mNumIndices; k++) {
-                indices.push_back(face.mIndices[k]);
+                indices.push_back(face.mIndices[k] + vertexOffset);
             }
         }
     }

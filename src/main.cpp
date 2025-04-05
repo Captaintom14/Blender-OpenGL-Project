@@ -140,7 +140,7 @@ void matrices(shaders& shader) {
     glm ::mat4 modelMatrix = glm::mat4(1.0f); // Initialize the model matrix to identity
 
     modelMatrix = glm::translate(modelMatrix, glm::vec3(xPosition, yPosition, -3.0f)); // Translate the model
-    modelMatrix = glm::rotate(modelMatrix, angle, glm::vec3(2.0f, 1.0f, 5.0f)); // Rotate the model
+    modelMatrix = glm::rotate(modelMatrix, angle, glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate the model
     modelMatrix = glm::scale(modelMatrix, glm::vec3(scale, scale, scale)); // Scale the model
     unsigned int modelLoc = glGetUniformLocation(shader.ID, "model"); // Get the location of the model matrix in the shaderà
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix)); // Send the model matrix to the shader
@@ -225,6 +225,9 @@ int main() {
     // Enable depth testing
     glEnable(GL_DEPTH_TEST);
 
+    glDisable(GL_CULL_FACE); // Disable face culling
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // Set the polygon mode to fill
+
     // Main loop 
     while (!glfwWindowShouldClose(window)) {
         
@@ -234,7 +237,7 @@ int main() {
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        angle += glm :: radians(0.6f); // Rotate the model
+        angle -= glm :: radians(0.6f); // Rotate the model
         // Use the shader program
         shader.useShader();
 
