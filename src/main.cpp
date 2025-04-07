@@ -4,8 +4,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-
-#include "Model.h"
 #include "shaders.h"
 #include "ModelAssimp.h"
 
@@ -199,11 +197,6 @@ int main() {
 
     // Initialize the Model
    const char* modelPath = "/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/Cybertruck_A3_COMP371.obj";
-    //debug
-    //cout << "Model Path: " << modelPath << endl;
-    // Load the model from the file (The current file is CUBE.obj and it is for testing purposes once the cybertruck is done, it will be replaced)
-    Model model;
-    model.loadModel("/Users/thomasmejia/Documents/GITHUB DOCUMENTS/Blender-OpenGL-Project/src/CUBE.obj");
     
     ModelAssimp modelAssimp;
     modelAssimp.LoadModel(modelPath);
@@ -226,7 +219,7 @@ int main() {
     glEnable(GL_DEPTH_TEST);
 
     glDisable(GL_CULL_FACE); // Disable face culling
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // Set the polygon mode to fill
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Set the polygon mode to fill
 
     // Main loop 
     while (!glfwWindowShouldClose(window)) {

@@ -30,7 +30,7 @@ indices.clear();
 for (unsigned int i = 0; i < meshCount; i++) {
     aiMesh* mesh = scene->mMeshes[i];
 
-    unsigned int vertexOffset = vertices.size() / 8; // 8 floats per vertex (3 for position, 2 for texture, 3 for normal)
+    unsigned int vertexOffset = vertices.size() / 8; 
         for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
                 aiVector3D vertex = mesh->mVertices[j];
 
